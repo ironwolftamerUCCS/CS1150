@@ -1,9 +1,11 @@
+import java.util.Scanner;
 
 public class StamperBrockAssignment2 {
 
 	public static void main(String[] args) {
 		// Assignment specifications
-		/*Add this assignment to the CS1150 project you created for assignment #1.
+		/*
+		* 1. Add this assignment to the CS1150 project you created for assignment #1.
 		* 2. Create a new Java class within your CS1150 project called LastNameFirstNameAssignment2
 		* 	a. Right click on your CS1150 project and select File->New->Class
 		* 
@@ -36,6 +38,85 @@ public class StamperBrockAssignment2 {
 		*		iv. Temperature in Celsius
 		*		v. Wind Chill in Celsius
 		*/
+		
+		// Get input from the user
+		// Instantiate scanner object
+		Scanner input = new Scanner(System.in);
+		
+		// Get the first location's name
+		System.out.print("Please enter name of 1st location: ");
+		String nameOfFirstLocation = input.next();
+		
+		// Get the first location's wind speed
+		System.out.print("Please enter the 1st location's wind speed: ");
+		double firstLocationWindSpeed = Double.parseDouble(input.next());
+		
+		// Get the first location's temperature in Fahrenheit
+		System.out.print("Please enter the 1st location's temperature in Fahrenheit: ");
+		double firstLocationTemperatureInFahrenheit = Double.parseDouble(input.next());
+		
+		// Get the second location's name
+		System.out.print("Please enter name of 2nd location: ");
+		String nameOfSecondLocation = input.next();
+		
+		// Get the second location's wind speed
+		System.out.print("Please enter the 2nd location's wind speed: ");
+		double secondLocationWindSpeed = Double.parseDouble(input.next());
+		
+		// Get the second location's temperature in Fahrenheit
+		System.out.print("Please enter the 2nd location's temperature in Fahrenheit: ");
+		double secondLocationTemperatureInFahrenheit = Double.parseDouble(input.next());
+		
+		// Calculate the wind chill in Fahrenheit
+		double firstLocationWindChillInFahrenheit = CalculateWindChill(firstLocationTemperatureInFahrenheit, firstLocationWindSpeed);
+		double secondLocationWindChillInFahrenheit = CalculateWindChill(secondLocationTemperatureInFahrenheit, secondLocationWindSpeed);
+		
+		// Convert temperature in Fahrenheit to Celsius
+		double firstLocationTemperatureInCelsius = ConvertFahrenheitToCelsius(firstLocationTemperatureInFahrenheit);
+		double secondLocationTemperatureInCelsius = ConvertFahrenheitToCelsius(secondLocationTemperatureInFahrenheit);
+		
+		// Convert wind chill in Fahrenheit to Celsius
+		double firstLocationWindChillInCelsius = ConvertFahrenheitToCelsius(firstLocationWindChillInFahrenheit);
+		double secondLocationWindChillInCelsius = ConvertFahrenheitToCelsius(secondLocationWindChillInFahrenheit);
+		
+		// Find the difference in temperature between location 1 and 2
+		double temperatureDifferenceInFahrenheit = Math.abs(secondLocationTemperatureInFahrenheit - firstLocationTemperatureInFahrenheit);
+		double temperatureDifferenceInCelsius = Math.abs(secondLocationTemperatureInCelsius - firstLocationTemperatureInCelsius);
+		
+		// Find the difference in wind speed between location 1 and 2
+		double windSpeedDifference = Math.abs(secondLocationWindSpeed - firstLocationWindSpeed);
+		
+		// Find the difference in wind chill between location 1 and 2
+		double windChillDifferenceInFahrenheit = Math.abs(secondLocationWindChillInFahrenheit - firstLocationWindChillInFahrenheit);
+		double windChillDifferenceInCelsius = Math.abs(secondLocationWindChillInCelsius - firstLocationWindChillInCelsius);
+		
+		// Output table that is formatted according to the specs document
+		// Table header and formatting
+		System.out.printf("%18s %18s %18s %18s %18s %18s", "Location", "Wind Speed", "Temperature(F)", "Wind Chill(F)", "Temperature(C)", "Wind Chill(C)");
+		System.out.println("-------------------------------------------------------");
+	
+		// Location statistics
+		System.out.printf("%18s %18.2f %18.2f %18.2f %18.2f %18.2f", nameOfFirstLocation, firstLocationWindSpeed, firstLocationTemperatureInFahrenheit, firstLocationWindChillInFahrenheit, firstLocationTemperatureInCelsius, firstLocationWindChillInCelsius);
+		
+		// Difference in statistics
+	}
+	
+	// Method that converts a given temperature that is in Fahrenheit to Celsius
+	// Parameters: 
+	// temperatureInFahrenheit - the temperature you want to convert in Fahrenheit
+	public static double ConvertFahrenheitToCelsius(double temperatureInFahrenheit) {
+		double convertedTempurature = (temperatureInFahrenheit - 32) * (5/9);
+		return convertedTempurature;
+	}
+	
+	// Method that calculates the wind speed given a temperature in Fahrenheit and a wind speed
+	// Parameter:
+	// temperatureInFahrenheit - the current temperature in Fahrenheit
+	// windSpeed - the current wind speed in mph
+	public static double CalculateWindChill(double temperatureInFahrenheit, double windSpeed) {
+		final double ExponantValue = 0.16f;
+		double windChill = 35.74 + (0.6215 * temperatureInFahrenheit) - Math.pow(35.75 * windSpeed, ExponantValue) + Math.pow(0.4275 * temperatureInFahrenheit * windSpeed, ExponantValue);
+		return windChill;
 	}
 
 }
