@@ -1,3 +1,4 @@
+import java.nio.file.spi.FileSystemProvider;
 import java.util.Scanner;
 
 public class StamperBrockAssignment2 {
@@ -67,6 +68,9 @@ public class StamperBrockAssignment2 {
 		System.out.print("Please enter the 2nd location's temperature in Fahrenheit: ");
 		double secondLocationTemperatureInFahrenheit = Double.parseDouble(input.next());
 		
+		// Close input object
+		input.close();
+		
 		// Calculate the wind chill in Fahrenheit
 		double firstLocationWindChillInFahrenheit = CalculateWindChill(firstLocationTemperatureInFahrenheit, firstLocationWindSpeed);
 		double secondLocationWindChillInFahrenheit = CalculateWindChill(secondLocationTemperatureInFahrenheit, secondLocationWindSpeed);
@@ -91,21 +95,32 @@ public class StamperBrockAssignment2 {
 		double windChillDifferenceInCelsius = Math.abs(secondLocationWindChillInCelsius - firstLocationWindChillInCelsius);
 		
 		// Output table that is formatted according to the specs document
-		// Table header and formatting
-		System.out.printf("%18s %18s %18s %18s %18s %18s", "Location", "Wind Speed", "Temperature(F)", "Wind Chill(F)", "Temperature(C)", "Wind Chill(C)");
-		System.out.println("-------------------------------------------------------");
+		// Table header
+		System.out.println();
+		System.out.println("***********************************************************************************************");
+		System.out.printf("%-35s %21s %35s%n", " ", "Wind Chill Calculator", " ");
+		System.out.println("***********************************************************************************************");
+		
+		// Table Column names
+		System.out.println();
+		System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s%n", "Location", "Wind Speed", "Temperature(F)", "Wind Chill(F)", "Temperature(C)", "Wind Chill(C)");
+		System.out.println("-----------------------------------------------------------------------------------------------");
 	
 		// Location statistics
-		System.out.printf("%18s %18.2f %18.2f %18.2f %18.2f %18.2f", nameOfFirstLocation, firstLocationWindSpeed, firstLocationTemperatureInFahrenheit, firstLocationWindChillInFahrenheit, firstLocationTemperatureInCelsius, firstLocationWindChillInCelsius);
-		
+		System.out.printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f %-15.2f%n", nameOfFirstLocation, firstLocationWindSpeed, firstLocationTemperatureInFahrenheit, firstLocationWindChillInFahrenheit, firstLocationTemperatureInCelsius, firstLocationWindChillInCelsius);
+		System.out.printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f %-15.2f%n", nameOfSecondLocation, secondLocationWindSpeed, secondLocationTemperatureInFahrenheit, secondLocationWindChillInFahrenheit, secondLocationTemperatureInCelsius, secondLocationWindChillInCelsius);
+		System.out.println("-----------------------------------------------------------------------------------------------");
+
 		// Difference in statistics
+		System.out.printf("%-15s %-15.2f %-15.2f %-15.2f %-15.2f %-15.2f%n", "Differences", windSpeedDifference, temperatureDifferenceInFahrenheit, windChillDifferenceInFahrenheit, temperatureDifferenceInCelsius, windChillDifferenceInCelsius);
+
 	}
 	
 	// Method that converts a given temperature that is in Fahrenheit to Celsius
 	// Parameters: 
 	// temperatureInFahrenheit - the temperature you want to convert in Fahrenheit
 	public static double ConvertFahrenheitToCelsius(double temperatureInFahrenheit) {
-		double convertedTempurature = (temperatureInFahrenheit - 32) * (5/9);
+		double convertedTempurature = (temperatureInFahrenheit - 32) * 5/9;
 		return convertedTempurature;
 	}
 	
@@ -114,8 +129,8 @@ public class StamperBrockAssignment2 {
 	// temperatureInFahrenheit - the current temperature in Fahrenheit
 	// windSpeed - the current wind speed in mph
 	public static double CalculateWindChill(double temperatureInFahrenheit, double windSpeed) {
-		final double ExponantValue = 0.16f;
-		double windChill = 35.74 + (0.6215 * temperatureInFahrenheit) - Math.pow(35.75 * windSpeed, ExponantValue) + Math.pow(0.4275 * temperatureInFahrenheit * windSpeed, ExponantValue);
+		final double ExponantValue = 0.16;
+		double windChill = 35.74 + 0.6215 * temperatureInFahrenheit - 35.75 * Math.pow(windSpeed, ExponantValue) + 0.4275 * temperatureInFahrenheit * Math.pow(windSpeed, ExponantValue);
 		return windChill;
 	}
 
