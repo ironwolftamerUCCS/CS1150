@@ -79,7 +79,7 @@ public class StamperBrockAssignment3 {
 		
 		// Make sure the input is within a valid range
 		if (0 >= userSmoothieOption || userSmoothieOption > 3) {
-			// Give an erro since the input was out of range
+			// Give an error since the input was out of range
 			System.out.println("\n" + userSmoothieOption + " is not a valid option. Run the program again and please enter a value between 1 and 3 inclusive.");
 		
 		}
